@@ -3,7 +3,9 @@
 # - пусть N = 4, тогда [ 1, 2, 6, 24 ] (1, 1*2, 1*2*3, 1*2*3*4)
 
 n = int(input("Введите целое число: "))
-# Костыльный метод 1
+
+
+# # Костыльный метод 1
 list1 = [1]
 for i in range(1, n + 1):
     list1.append(i * list1[i - 1])
@@ -14,11 +16,27 @@ print(f"Метод 1: {list1}")
 # Метод 2
 def multip(number):
     res = 1
-    for i in range(1, number+1):
+    for i in range(1, number + 1):
         res = res * i
     return res
 
+
 list2 = []
-for i in range(1, n+1):
+for i in range(1, n + 1):
     list2.append(multip(i))
 print(f"Метод 2: {list2}")
+
+
+# Метод 3, рекурсия
+
+def recurs(number):
+    if number == 1:
+        return 1
+    else:
+        number -= 1
+        return number * recurs(number)
+
+list3 = []
+for i in range(1, n + 1):
+    list3.append(recurs(i+1))
+print(f"Метод 3: {list3}")
