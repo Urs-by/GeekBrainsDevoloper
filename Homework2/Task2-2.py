@@ -31,7 +31,7 @@ print(f"Метод 2: {list2}")
 
 def recurs(number):
     if number == 1:
-        return 1
+        return number
     else:
         number -= 1
         return number * recurs(number)
