@@ -14,5 +14,10 @@ def simple_number(number):
                 simple_list.append(i)
     return simple_list
 
-number = 147420
-print(simple_number(number))
+
+number1 = 147420
+number2 = 374220
+print(f"Cписок простых множителей для {number1}")
+print(simple_number(number1))
+print(f"Cписок простых множителей для {number2}")
+print(simple_number(number2))
