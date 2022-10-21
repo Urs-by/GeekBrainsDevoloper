@@ -13,8 +13,7 @@
 # Примечание: Обратите внимание на запись первой и нулевой степени, а также учет нулевого коэффициента.
 # Для формирования строки удобно использовать join
 # 3) Функция записи строки-полинома в файл. Аргументы: имя файла и строка-полином.
-# import random
-
+import random
 
 # функция создания списка коэфициентов для полинома
 def list_polynom(degree):
@@ -29,7 +28,7 @@ def create_polynom(val, ind):
     if ind <= 1:
         ind = ''
         degr = ''
-    strok = f'{random.choice(["+", "-"])}{val}x{degr}{ind}'
+    strok = f'{random.choice([" + ", " - "])}{val}x{degr}{ind}'
     return strok
 
 
@@ -40,7 +39,7 @@ def str_polynom(pol_list):
         if pol_list[i] > 0:
             pol_str += create_polynom(pol_list[i], len(pol_list) - 1 - i)
     if pol_list[-1] != 0:
-        pol_str += f'{random.choice(["+", "-"])}{pol_list[-1]}'
+        pol_str += f'{random.choice([" + ", " - "])}{pol_list[-1]}'
     pol_str += ' = 0'
     return pol_str
 
@@ -51,18 +50,19 @@ def write_polynom(name, polynom):
         file.writelines(polynom)
 
 
-degree = random.randint(3, 10)
-print("Длина полинома:", degree)
-temp = list_polynom(degree)
-# для отладки:
-# temp = [3, 4, 5, 1, 2]
-print("Cписок коэффициентов: ")
-print(temp)
+if __name__ == '__main__':
+    degree = random.randint(3, 10)
+    print("Длина полинома:", degree)
+    temp = list_polynom(degree)
+    # для отладки:
+    # temp = [3, 4, 5, 1, 2]
+    print("Cписок коэффициентов: ")
+    print(temp)
 
-polynom = str_polynom(temp)
-print("Сформированный полином:")
-print(polynom)
-number = input("Введите порядковый номер файла для записи: ")
-name = f'polynom{number}.txt'
-write_polynom(name, polynom)
-print(f"Файл {name} успешно создан!")
+    polynom = str_polynom(temp)
+    print("Сформированный полином:")
+    print(polynom)
+    number = input("Введите порядковый номер файла для записи: ")
+    name = f'polynom{number}.txt'
+    write_polynom(name, polynom)
+    print(f"Файл {name} успешно создан!")
