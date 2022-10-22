@@ -10,12 +10,12 @@ def simple_number(number):
     for i in range(2, number):
         while number % i == 0:
             number /= i
-            if i not in simple_list:
-                simple_list.append(i)
+            #if i not in simple_list:
+            simple_list.append(i)
     return simple_list
 
 
-number1 = 147420
+number1 = 100
 number2 = 374220
 print(f"Cписок простых множителей для {number1}")
 print(simple_number(number1))
