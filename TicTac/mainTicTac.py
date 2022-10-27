@@ -9,9 +9,10 @@ import random
 import view
 
 
-def get_random_values() -> str:
+def get_random_values(list_values: list) -> str:
     """
-    Случайная генерация крестика/нолика
+    Случайная генерация крестика/нолик
+    :param list_values:
     :return: крестик / нолик / пусто
     """
     return random.choice(list_values)
@@ -25,7 +26,7 @@ def fill_fild(number_field: int) -> list:
     """
     list_field = [''] * number_field
     for i in range(len(list_field)):
-        list_field[i] = get_random_values()
+        list_field[i] = get_random_values(list_values)
     return list_field
 
 
