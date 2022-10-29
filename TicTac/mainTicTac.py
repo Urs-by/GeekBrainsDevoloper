@@ -22,7 +22,7 @@ import view
 def get_random_values(list_values: list) -> str:
     """
     Случайная генерация крестика/нолик
-    :param list_values:
+    :param list_values: список возможных значений
     :return: крестик / нолик / пусто
     """
     return random.choice(list_values)
@@ -38,6 +38,43 @@ def fill_fild(number_field: int) -> list:
     for i in range(len(list_field)):
         list_field[i] = get_random_values(list_values)
     return list_field
+
+
+def valid_type(number: str) -> bool:
+    """
+    Проверка на правильность введенного число
+    :param number: введенное значение
+    :return: True / False
+    """
+    if number.isdigit():
+        return True
+    else:
+        return False
+
+
+def valid_number(number: int) -> bool:
+    """
+    Проверка на правильность номера ячейки поля
+    :param number: введенное значение
+    :return: True / False
+    """
+    if 1 < number < 10:
+        return True
+    else:
+        return False
+
+
+def valid_value(number: int, list_values: list) -> bool:
+    """
+    Проверка, что ячейка свободна
+    :param number: введенное значение
+    :param list_values: список с ходами
+    :return: True / False
+    """
+    if list_values[number - 1] == ' ':
+        return True
+    else:
+        return False
 
 
 list_values = ['X', 'O', ' ']
