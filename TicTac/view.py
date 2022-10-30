@@ -10,3 +10,23 @@ def scheme(field: list):
            f"├─────┼─────┼─────┤\n" \
            f"|  {field[6]}  |  {field[7]}  |  {field[8]}  |\n" \
            f"└─────┴─────┴─────┘"
+
+
+def players(number_player: int) -> str:
+    """
+    ВВод имени игрока
+    :param number_player: номер игрока
+    :return: player: имя игрока
+    """
+    player = input(f"Игрок {number_player}, Введите Ваше имя: ")
+    return player
+
+
+def move(player: str) -> str:
+    """
+    Ход игрока
+    :param player: Номер игрока
+    :return: номер клетки
+    """
+    cell_number = input(f"{player}, Ваш ход, введите номер клетки: ")
+    return cell_number

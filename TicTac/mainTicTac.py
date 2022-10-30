@@ -40,6 +40,18 @@ def fill_fild(number_field: int) -> list:
     return list_field
 
 
+def quit(number: str) -> bool:
+    """
+    если "q" то окончание игры
+    :param number: введенное значение
+    :return: True / False
+    """
+    if number.lower() == "q":
+        return True
+    else:
+        return False
+
+
 def valid_type(number: str) -> bool:
     """
     Проверка на правильность введенного число
@@ -58,7 +70,7 @@ def valid_number(number: int) -> bool:
     :param number: введенное значение
     :return: True / False
     """
-    if 1 < number < 10:
+    if 0 < number < 10:
         return True
     else:
         return False
@@ -77,7 +89,43 @@ def valid_value(number: int, list_values: list) -> bool:
         return False
 
 
-list_values = ['X', 'O', ' ']
+def get_first_move_player(count_players) -> int:
+    """
+    Случайный выбор игрока, который будет ходить первым
+    :return: номер игрока (1/2)
+    """
+    return random.randint(1, count_players)
+
+
+count_players = 2
+# list_values = ['X', 'O', ' ']
+list_values = [' ']
 numbers = 9
 list_field = fill_fild(numbers)
-print(view.scheme(list_field))
+# print(view.scheme(list_field))
+
+
+start = get_first_move_player(count_players)
+if start == 1:
+    next = 2
+else:
+    next = 1
+first = view.players(start)
+second = view.players(next)
+print(f"{first}, Вы начинаете игру!")
+while True:
+    move1 = view.move(first)
+    if quit(move1):
+        break
+    elif valid_type(move1) == False:
+        print("Вы ввели не верное значение, попробуйте снова: ")
+        break
+    else:
+        move1 = int(move1)
+    if valid_number(move1) == False:
+        print("Вы ввели не верное значение, попробуйте снова: ")
+    elif valid_value(move1, list_field) == False:
+        print("Введенная ячейка уже занята, попробуйте снова: ")
+    else:
+        list_field[move1 - 1] = "X"
+    print(view.scheme(list_field))
