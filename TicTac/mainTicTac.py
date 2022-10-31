@@ -17,6 +17,7 @@
 
 import random
 import view
+import validation
 
 
 def get_random_values(list_values: list) -> str:
@@ -40,55 +41,6 @@ def fill_fild(number_field: int) -> list:
     return list_field
 
 
-def quit(number: str) -> bool:
-    """
-    если "q" то окончание игры
-    :param number: введенное значение
-    :return: True / False
-    """
-    if number.lower() == "q":
-        return True
-    else:
-        return False
-
-
-def valid_type(number: str) -> bool:
-    """
-    Проверка на правильность введенного число
-    :param number: введенное значение
-    :return: True / False
-    """
-    if number.isdigit():
-        return True
-    else:
-        return False
-
-
-def valid_number(number: int) -> bool:
-    """
-    Проверка на правильность номера ячейки поля
-    :param number: введенное значение
-    :return: True / False
-    """
-    if 0 < number < 10:
-        return True
-    else:
-        return False
-
-
-def valid_value(number: int, list_values: list) -> bool:
-    """
-    Проверка, что ячейка свободна
-    :param number: введенное значение
-    :param list_values: список с ходами
-    :return: True / False
-    """
-    if list_values[number - 1] == ' ':
-        return True
-    else:
-        return False
-
-
 def get_first_move_player(count_players) -> int:
     """
     Случайный выбор игрока, который будет ходить первым
@@ -97,35 +49,40 @@ def get_first_move_player(count_players) -> int:
     return random.randint(1, count_players)
 
 
+def step(player: str, tictac: str) -> list:
+    player_move = view.move(player)
+    while True:
+        if validation.valid_total(player_move, list_field):
+            list_field[int(player_move) - 1] = tictac
+            return list_field
+        else:
+            player_move = view.move(player)
+
+
 count_players = 2
-# list_values = ['X', 'O', ' ']
+# # list_values = ['X', 'O', ' ']
 list_values = [' ']
 numbers = 9
 list_field = fill_fild(numbers)
-# print(view.scheme(list_field))
-
-
-start = get_first_move_player(count_players)
-if start == 1:
-    next = 2
+player_one = view.players(1)
+player_two = view.players(2)
+lotery = get_first_move_player(count_players)
+if lotery == 1:
+    first = player_one
+    second = player_two
 else:
-    next = 1
-first = view.players(start)
-second = view.players(next)
-print(f"{first}, Вы начинаете игру!")
+    first = player_two
+    second = player_one
+view.start_game(first)
 while True:
-    move1 = view.move(first)
-    if quit(move1):
-        break
-    elif valid_type(move1) == False:
-        print("Вы ввели не верное значение, попробуйте снова: ")
-        break
+    if validation.valid_len_list(list_field):
+        step(first, "X")
+        print(view.scheme(list_field))
     else:
-        move1 = int(move1)
-    if valid_number(move1) == False:
-        print("Вы ввели не верное значение, попробуйте снова: ")
-    elif valid_value(move1, list_field) == False:
-        print("Введенная ячейка уже занята, попробуйте снова: ")
+        break
+    if validation.valid_len_list(list_field):
+        step(second, "0")
+        print(view.scheme(list_field))
     else:
-        list_field[move1 - 1] = "X"
-    print(view.scheme(list_field))
+        break
+view.game_over()

@@ -30,3 +30,18 @@ def move(player: str) -> str:
     """
     cell_number = input(f"{player}, Ваш ход, введите номер клетки: ")
     return cell_number
+
+def error_type():
+    print("Не верный тип данных!")
+
+def error_number():
+    print("Вы ввели не существуюший номер ячейки!")
+
+def error_value():
+    print("Данная ячейка уже занята!")
+    
+def game_over():
+    print("Игра окончена!")
+
+def start_game(player):
+    print(f"{player}, Вы начинаете игру! Ваши крестики ")
