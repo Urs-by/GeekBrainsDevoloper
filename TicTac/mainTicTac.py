@@ -15,58 +15,25 @@
 #   - Отображение поля с новым состояние и переход хода к следующему игроку.
 
 
-import random
 import view
 import validation
-
-
-def get_random_values(list_values: list) -> str:
-    """
-    Случайная генерация крестика/нолик
-    :param list_values: список возможных значений
-    :return: крестик / нолик / пусто
-    """
-    return random.choice(list_values)
-
-
-def fill_fild(number_field: int) -> list:
-    """
-    Заполнение ячеек случайным состоянием
-    :param number_field: количество ячеек
-    :return: заполненный список
-    """
-    list_field = [''] * number_field
-    for i in range(len(list_field)):
-        list_field[i] = get_random_values(list_values)
-    return list_field
-
-
-def get_first_move_player(count_players) -> int:
-    """
-    Случайный выбор игрока, который будет ходить первым
-    :return: номер игрока (1/2)
-    """
-    return random.randint(1, count_players)
-
-
-def step(player: str, tictac: str) -> list:
-    player_move = view.move(player)
-    while True:
-        if validation.valid_total(player_move, list_field):
-            list_field[int(player_move) - 1] = tictac
-            return list_field
-        else:
-            player_move = view.move(player)
-
+import models
 
 count_players = 2
 # # list_values = ['X', 'O', ' ']
 list_values = [' ']
 numbers = 9
-list_field = fill_fild(numbers)
+list_field = models.fill_fild(numbers, list_values)
+
+# Ввод игроков
 player_one = view.players(1)
 player_two = view.players(2)
-lotery = get_first_move_player(count_players)
+
+# Правила игры
+print(view.rules_game())
+
+# Розыгрыш первого хода
+lotery = models.get_first_move_player(count_players)
 if lotery == 1:
     first = player_one
     second = player_two
@@ -74,15 +41,25 @@ else:
     first = player_two
     second = player_one
 view.start_game(first)
+
 while True:
-    if validation.valid_len_list(list_field):
-        step(first, "X")
-        print(view.scheme(list_field))
-    else:
+
+    move_player = view.move(first)
+    # eсли Q то выход
+    if validation.game_over(move_player):
         break
-    if validation.valid_len_list(list_field):
-        step(second, "0")
+    # если введенные параметры верны, записываем Х
+    elif models.step(move_player, first, "X", list_field):
         print(view.scheme(list_field))
-    else:
+    # eсли нет пустых ячеек, заканчиваем игру
+    if validation.valid_len_list(list_field) == False:
         break
+    # переход хода
+    move_player = view.move(second)
+    if validation.game_over(move_player):
+        break
+    # если введенные параметры верны, записываем 0
+    elif models.step(move_player, second, "0", list_field):
+        print(view.scheme(list_field))
+
 view.game_over()
