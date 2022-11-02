@@ -4,33 +4,62 @@
 #    - Наполнение ее случайным состоянием для каждой ячейки: крестик, нолик, пусто
 #    - Рисование поля клеток с отображением текущего состояния (frontend в консоли)
 #    - Создание frontend модуля: все, что связано с прорисовкой поля. Импорт в основную программу.
+#  Этап 2
+#   - Интерактивность. Играют два игрока, каждый выбирает ячейку, в которую поставить свой знак(крестик или нолик)
+#   - Игроки делают свои ходы пока поле полностью не заполнится, потом выход из программы с соответствующим сообщением.
+#   - Полная проверка "на дурака", например, ячейка уже занята. Если используем номера ячеек,
+#     то корректность ввода данных от игрока. Вывод значимых и понятных для игрока сообщений о неправильных данных.
+#     и возможность ошибаться сколько угодно раз.
+#   - Возможность игроку прервать игру в любой момент, "если надоест"
+#   - Изменение состояния системы, если ход игрока прошел верификацию
+#   - Отображение поля с новым состояние и переход хода к следующему игроку.
 
-import random
+
 import view
+import validation
+import models
 
-
-def get_random_values(list_values: list) -> str:
-    """
-    Случайная генерация крестика/нолик
-    :param list_values:
-    :return: крестик / нолик / пусто
-    """
-    return random.choice(list_values)
-
-
-def fill_fild(number_field: int) -> list:
-    """
-    Заполнение ячеек случайным состоянием
-    :param number_field: количество ячеек
-    :return: заполненный список
-    """
-    list_field = [''] * number_field
-    for i in range(len(list_field)):
-        list_field[i] = get_random_values(list_values)
-    return list_field
-
-
-list_values = ['X', 'O', ' ']
+count_players = 2
+# # list_values = ['X', 'O', ' ']
+list_values = [' ']
 numbers = 9
-list_field = fill_fild(numbers)
-print(view.scheme(list_field))
+list_field = models.fill_fild(numbers, list_values)
+
+# Ввод игроков
+player_one = view.players(1)
+player_two = view.players(2)
+
+# Правила игры
+print(view.rules_game())
+
+# Розыгрыш первого хода
+lotery = models.get_first_move_player(count_players)
+if lotery == 1:
+    first = player_one
+    second = player_two
+else:
+    first = player_two
+    second = player_one
+view.start_game(first)
+
+while True:
+
+    move_player = view.move(first)
+    # eсли Q то выход
+    if validation.game_over(move_player):
+        break
+    # если введенные параметры верны, записываем Х
+    elif models.step(move_player, first, "X", list_field):
+        print(view.scheme(list_field))
+    # eсли нет пустых ячеек, заканчиваем игру
+    if validation.valid_len_list(list_field) == False:
+        break
+    # переход хода
+    move_player = view.move(second)
+    if validation.game_over(move_player):
+        break
+    # если введенные параметры верны, записываем 0
+    elif models.step(move_player, second, "0", list_field):
+        print(view.scheme(list_field))
+
+view.game_over()
