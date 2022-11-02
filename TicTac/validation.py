@@ -1,5 +1,6 @@
 import view
 
+
 def game_over(move_player: str) -> bool:
     """
     если "q" то окончание игры
@@ -83,3 +84,9 @@ def valid_total(move_player: str, list_values: list) -> bool:
         return False
     else:
         return True
+
+def valid_option(win_option, tictac):
+    for i in win_option:
+        if i.count(tictac) == 3:
+            return True
+    return False

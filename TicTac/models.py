@@ -48,3 +48,21 @@ def step(player_move: str, player: str, tictac: str, list_field: list) -> list:
             return list_field
         else:
             player_move = view.move(player)
+
+
+def victory_option(field):
+    win_option = [[field[0], field[1], field[2]],
+                  [field[3], field[4], field[5]],
+                  [field[6], field[7], field[8]],
+                  [field[0], field[3], field[6]],
+                  [field[1], field[4], field[7]],
+                  [field[2], field[5], field[8]],
+                  [field[0], field[4], field[8]],
+                  [field[2], field[4], field[6]]]
+    return win_option
+
+
+def number_winner(win_option, tictac):
+    for i in range(len(win_option)):
+        if win_option[i].count(tictac) == 3:
+            return i

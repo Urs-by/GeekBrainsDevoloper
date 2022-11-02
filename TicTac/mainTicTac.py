@@ -12,7 +12,12 @@
 #     и возможность ошибаться сколько угодно раз.
 #   - Возможность игроку прервать игру в любой момент, "если надоест"
 #   - Изменение состояния системы, если ход игрока прошел верификацию
-#   - Отображение поля с новым состояние и переход хода к следующему игроку.
+#  Этап 3
+#  - Отображение поля с новым состояние и переход хода к следующему игроку.
+#  - Проверка текущего состояния системы на "выигрыш" после очередного хода игрока.
+#  - Вывод результа о победителе в консоль и указание какая "линия поля" привела к победе:
+#    горизонталь, вертикаль, диагональ и какая именно.
+#  - (Усложнение. Необязательно) Для индикации победной линии можно использовать https://pypi.org/project/colorama/
 
 
 import view
@@ -51,6 +56,12 @@ while True:
     # если введенные параметры верны, записываем Х
     elif models.step(move_player, first, "X", list_field):
         print(view.scheme(list_field))
+        win_option = models.victory_option(list_field)
+        if validation.valid_option(win_option, "X"):
+            view.winner(first)
+            print(view.name_list_win(models.number_winner(win_option, "X")))
+            break
+
     # eсли нет пустых ячеек, заканчиваем игру
     if validation.valid_len_list(list_field) == False:
         break
@@ -61,5 +72,11 @@ while True:
     # если введенные параметры верны, записываем 0
     elif models.step(move_player, second, "0", list_field):
         print(view.scheme(list_field))
+        win_option = models.victory_option(list_field)
+
+        if validation.valid_option(win_option, "0"):
+            view.winner(second)
+            print(view.name_list_win(models.number_winner(win_option, "0")))
+            break
 
 view.game_over()
