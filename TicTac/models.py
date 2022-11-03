@@ -1,6 +1,7 @@
 import view
 import random
 import validation
+from colorama import Fore
 
 
 def get_random_values(list_values: list) -> str:
@@ -50,7 +51,12 @@ def step(player_move: str, player: str, tictac: str, list_field: list) -> list:
             player_move = view.move(player)
 
 
-def victory_option(field):
+def victory_option(field: list) -> list:
+    """
+    Список с выигрышными вариантами
+    :param field: список ходов
+    :return: win_option: список с выигрышными вариантами
+    """
     win_option = [[field[0], field[1], field[2]],
                   [field[3], field[4], field[5]],
                   [field[6], field[7], field[8]],
@@ -62,7 +68,27 @@ def victory_option(field):
     return win_option
 
 
-def number_winner(win_option, tictac):
+def number_winner(win_option: list, tictac: str) -> int:
+    """
+    Определяет индекс выигрышного варианта
+    :param win_option: список с выигрышными вариантами
+    :param tictac: значение Х или 0
+    :return: индекс выигрышного варианта
+    """
     for i in range(len(win_option)):
         if win_option[i].count(tictac) == 3:
             return i
+
+
+def color_index(win_index: int, field_list: list) -> list:
+    """
+    Закраска выигрышной линии
+    :param win_index: индекс выигрышной линии из list_index
+    :param field_list: список ходов
+    :return: field_list: список ходов с закраской
+    """
+    list_index = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    color_list = list_index[win_index]
+    for i in color_list:
+        field_list[i] = Fore.RED + str(field_list[i]) + Fore.RESET
+    return field_list

@@ -35,7 +35,7 @@ player_one = view.players(1)
 player_two = view.players(2)
 
 # Правила игры
-print(view.rules_game())
+view.rules_game()
 
 # Розыгрыш первого хода
 lotery = models.get_first_move_player(count_players)
@@ -56,29 +56,43 @@ while True:
         break
     # если введенные параметры верны, записываем Х
     elif models.step(move_player, first, "X", list_field):
-        print(view.scheme(list_field))
+        view.scheme(list_field)
+        # в список с вариантами выигрышей записываем ход
         win_option = models.victory_option(list_field)
+        # проверка на выигрышный ход
         if validation.valid_option(win_option, "X"):
             view.winner(first)
-            print(view.name_list_win(models.number_winner(win_option, "X")))
+            # определения выигрышной линии
+            index_win = models.number_winner(win_option, "X")
+            print(view.name_list_win(index_win))
+            # закраска выигрышной линии
+            view.scheme(models.color_index(index_win, list_field))
+
             break
 
     # eсли нет пустых ячеек, заканчиваем игру
     if validation.valid_len_list(list_field) == False:
         view.win_friendship()
         break
+
     # переход хода
     move_player = view.move(second)
     if validation.game_over(move_player):
         break
     # если введенные параметры верны, записываем 0
     elif models.step(move_player, second, "0", list_field):
-        print(view.scheme(list_field))
+        view.scheme(list_field)
+        # в список с вариантами выигрышей записываем ход
         win_option = models.victory_option(list_field)
-
+        # проверка на выигрышный ход
         if validation.valid_option(win_option, "0"):
             view.winner(second)
-            print(view.name_list_win(models.number_winner(win_option, "0")))
+            # определения выигрышной линии
+            index_win = models.number_winner(win_option, "0")
+            print(view.name_list_win(index_win))
+            # закраска выигрышной линии
+            view.scheme(models.color_index(index_win, list_field))
+
             break
 
 view.game_over()

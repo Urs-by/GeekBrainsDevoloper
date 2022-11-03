@@ -64,8 +64,7 @@ def valid_len_list(list_fild: list) -> bool:
     """
     if ' ' in list_fild:
         return True
-    else:
-        return False
+    return False
 
 
 def valid_total(move_player: str, list_values: list) -> bool:
@@ -85,7 +84,14 @@ def valid_total(move_player: str, list_values: list) -> bool:
     else:
         return True
 
-def valid_option(win_option, tictac):
+
+def valid_option(win_option: list, tictac: str) -> bool:
+    """
+    Определяет есть выигрышный вариант
+    :param win_option: список с выигрышными вариантами
+    :param tictac: значение Х или 0
+    :return: True / False
+    """
     for i in win_option:
         if i.count(tictac) == 3:
             return True
