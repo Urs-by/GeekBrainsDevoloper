@@ -52,6 +52,7 @@ while True:
     move_player = view.move(first)
     # eсли Q то выход
     if validation.game_over(move_player):
+        view.win_friendship()
         break
     # если введенные параметры верны, записываем Х
     elif models.step(move_player, first, "X", list_field):
@@ -64,6 +65,7 @@ while True:
 
     # eсли нет пустых ячеек, заканчиваем игру
     if validation.valid_len_list(list_field) == False:
+        view.win_friendship()
         break
     # переход хода
     move_player = view.move(second)
