@@ -9,8 +9,7 @@ def game_over(move_player: str) -> bool:
     """
     if move_player.lower() == "q":
         return True
-    else:
-        return False
+    return False
 
 
 def valid_type(move_player: str) -> bool:
@@ -37,9 +36,8 @@ def valid_number(move_player: int) -> bool:
     """
     if 0 < move_player < 10:
         return True
-    else:
-        view.error_number()
-        return False
+    view.error_number()
+    return False
 
 
 def valid_value(move_player: int, list_values: list) -> bool:
@@ -51,9 +49,8 @@ def valid_value(move_player: int, list_values: list) -> bool:
     """
     if list_values[move_player - 1] == ' ':
         return True
-    else:
-        view.error_value()
-        return False
+    view.error_value()
+    return False
 
 
 def valid_len_list(list_fild: list) -> bool:
@@ -75,11 +72,11 @@ def valid_total(move_player: str, list_values: list) -> bool:
     :return: True / False
     """
 
-    if valid_type(move_player) == False:
+    if not valid_type(move_player):
         return False
-    elif valid_number(int(move_player)) == False:
+    elif not valid_number(int(move_player)):
         return False
-    elif valid_value(int(move_player), list_values) == False:
+    elif not valid_value(int(move_player), list_values):
         return False
     else:
         return True
