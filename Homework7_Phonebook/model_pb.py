@@ -1,25 +1,19 @@
-def valid_type(number: str) -> bool:
+def txt_read_file(name_file: str) -> str:
     """
-    Проверка на тип, число
-    :param number: введенный параметр
-    :return: bool
+    Чтение данных из файла
+    :param file: имя файла
+    :return: справочник
     """
-    if number.isdigit():
-        return True
-    else:
-        return False
+    temp = ''
+    with open(name_file, "r", encoding="UTF8") as file:
+        for line in file:
+            if line:
+                temp += line
+    return temp
 
 
-def valid_number(number: str, last: int) -> bool:
-    """
-    Проверка на совпадение пунктов меню
-    :param number: пункт меню
-    :return: bool
-    """
-    if 0 < int(number) <= last:
-        return True
-    else:
-        return False
-
+def txt_write_file(name: str, catalog: str):
+    with open(name, "w", encoding="UTF8") as file:
+        file.writelines(catalog)
 
 
