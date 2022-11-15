@@ -48,6 +48,10 @@ def enter_name_file() -> str:
     return name_file
 
 
+def error_field():
+    print("Вы ввели пустое поле, попробуете снова!")
+
+
 def get_new_record(data: str) -> str:
     '''
     Ввод новых данных(ФИО, телефон)
@@ -60,6 +64,7 @@ def get_new_record(data: str) -> str:
 
 def print_all(catalog: str):
     print(catalog)
+
 
 def name_file():
     name = input("Введите имя файла: ")

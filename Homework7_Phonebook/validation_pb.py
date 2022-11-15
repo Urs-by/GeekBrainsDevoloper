@@ -25,6 +25,18 @@ def valid_number(number: str, last: int) -> bool:
         return False
 
 
+def valid_field(number: str) -> bool:
+    """
+    пРоверка на пусто значение
+    :param number: пункт меню
+    :return: bool
+    """
+    if number and number.strip():
+        return True
+    else:
+        return False
+    
+
 def valid_data(last: int) -> int:
     """
     Цикл пока не введен правильный пункт меню
