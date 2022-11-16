@@ -21,8 +21,6 @@ def action_type(action: str):
           f'Выберите формат  для {action} файла: \n'
           "1 - txt;\n"
           "2 - csv;\n"
-          "3 - json;\n"
-          "4 - xml;\n"
           "0 - возврат в меню")
 
 
@@ -41,6 +39,10 @@ def error_type():
 
 def error_number():
     print("Вы выбрали не существующий пункт меню, попробуйте снова!")
+
+
+def error_file():
+    print("Указанный файл не найден, проверьте путь или имя файла")
 
 
 def enter_name_file() -> str:
@@ -63,9 +65,18 @@ def get_new_record(data: str) -> str:
 
 
 def print_all(catalog: str):
+    print("Текущие данные из справочника: ")
     print(catalog)
 
 
 def name_file():
     name = input("Введите имя файла: ")
     return name
+
+
+def success_write():
+    print("Данные успешно экспортированы!")
+
+
+def success_read():
+    print("Данные успешно импортированы!")

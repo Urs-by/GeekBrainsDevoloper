@@ -35,7 +35,7 @@ def valid_field(number: str) -> bool:
         return True
     else:
         return False
-    
+
 
 def valid_data(last: int) -> int:
     """
@@ -50,3 +50,18 @@ def valid_data(last: int) -> int:
             view.error_number()
         else:
             return int(choice)
+
+
+def valid_file(name_file: str) -> bool:
+    """
+    Проверка на существование файла
+    :param name_file: имя файла
+    :return:bool
+    """
+    try:
+        file = open(name_file, "r", encoding="UTF8")
+    except FileNotFoundError:
+        return False
+    else:
+        file.close()
+        return True

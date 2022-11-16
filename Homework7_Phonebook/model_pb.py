@@ -1,59 +1,73 @@
-def csv_read_file(name_file: str) -> str:
+import validation_pb as valid
+import view_pb as view
+import file_txt as filetxt
+import file_csv as filecsv
+
+
+def new_record(catalog: str, list_menu: list) -> str:
     """
-    Чтение данных из файла
-    :param file: имя файла
-    :return: справочник
+    Запись нового пользователя в catalog
+    :param catalog: текущие данные из справочника
+    :param list_menu: список полей справочника
+    :return: catalog: обновленные данные справочника
     """
-    temp = ''
-    with open(name_file, "r", encoding="UTF8") as file:
-        for line in file:
-            if line:
-                temp += line
-    return temp
+    for i in range(len(list_menu)):
+        # проверка на пустое значение
+        while True:
+            new_record = view.get_new_record(list_menu[i])
+            if valid.valid_field(new_record):
+                break
+            else:
+                view.error_field()
+        catalog += new_record + ','
+    # удаляем последнюю запятую из записи
+    catalog = catalog[:-1]
+    catalog += '\n'
+    return catalog
 
 
-def csv_write_file(name: str, catalog: str):
-    '''
-    запись данных в csv файл
-    :param name: имя файла
-    :param catalog: данные для записи
-    :return:
-    '''
-    with open(name, "w", encoding="UTF8") as file:
-        file.writelines(catalog)
+def import_file(name_action: str, catalog: str, last_type_file: int) -> str:
+    """
+    Импорт данных из файла заданного формата
+    :param name_action: название действия-импорт/экспорт
+    :param catalog: данные справочника
+    :param last_type_file: количество пунктов в меню
+    :return: обновленные данные справочника
+    """
+    view.action_type(name_action)
+    number_type = valid.valid_data(last_type_file)
+    if number_type == 1:
+        name = view.name_file() + '.txt'
+        if valid.valid_file(name):
+            catalog += filetxt.txt_read_file(name)
+            view.success_read()
+        else:
+            view.error_file()
+    elif number_type == 2:
+        name = view.name_file() + '.csv'
+        if valid.valid_file(name):
+            catalog += filecsv.csv_read_file(name)
+            view.success_read()
+        else:
+            view.error_file()
+    return catalog
 
 
-def txt_write_file(name: str, catalog: str):
-    with open(name, "w", encoding="UTF8") as file:
-        record = catalog.split('\n')
-        for i in record:
-            field = i.split(',')
-            for j in field:
-                file.writelines(j + '\n')
-                file.writelines('\n')
-
-
-def txt_read_file(name_file: str) -> str:
-    '''
-    чтение данных из txt файла
-    :param name: имя файла
-    :return:
-    '''
-    temp = ''
-    with open(name_file, "r", encoding="UTF8") as file:
-        count = 1
-        stroke = ''
-        for line in file:
-            if len(line) > 1:
-                if count != 4:
-                    stroke += line.strip('\n') + ','
-                    count += 1
-                else:
-                    stroke += line.strip('\n') + ','
-                    temp += stroke[:-1]
-                    temp += '\n'
-                    stroke=''
-                    count = 1
-
-
-    return temp
+def export_file(name_action: str, catalog: str, last_type_file: int) -> str:
+    """
+    Экспорт данных в заданный формат
+    :param name_action: название действия-импорт/экспорт
+    :param catalog: данные справочника
+    :param last_type_file: количество пунктов в меню
+    :return: обновленные данные справочника
+    """
+    view.action_type(name_action)
+    number_type = valid.valid_data(last_type_file)
+    if number_type == 1:
+        name = view.name_file() + '.txt'
+        filetxt.txt_write_file(name, catalog)
+        view.success_write()
+    elif number_type == 2:
+        name = view.name_file() + '.csv'
+        filecsv.csv_write_file(name, catalog)
+        view.success_write()
