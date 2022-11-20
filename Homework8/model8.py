@@ -1,41 +1,26 @@
 import csv
 
 
-def get_id(name_file: str) -> int:
+def get_id() -> int:
     '''
     Запрос нна получение последнего ID
     :param name_file: имя файла
     :return: последний ID
     '''
-    with open(name_file, 'r') as file:
+    with open('id.txt', 'r') as file:
         number_id = int(file.readline())
     return number_id
 
 
-def put_id(name_file: str, number_id: str):
+def put_id(number_id: str):
     '''
     Запись последнего номера ID
     :param name_file: имя файла
     :param number_id: номер ID
     :return: None
     '''
-    with open(name_file, 'w') as file:
+    with open('id.txt', 'w') as file:
         file.write(number_id)
-
-
-def valid_id_in_file(name_file: str, delimiter: str) -> bool:
-    '''
-    Определяет есть ли в файле ID
-    :param name_file: имя файла
-    :param delimiter: разделитель csv файла
-    :return: True/False
-    '''
-    with open(name_file, encoding='utf-8') as file:
-        data = file.readline().split(delimiter)
-        if data[0].isdigit():
-            return True
-        else:
-            return False
 
 
 def header_csv_file() -> list:
@@ -95,15 +80,17 @@ def get_id_from_db(db: dict) -> int:
     return max([int(i) for i in db.keys()])
 
 
-def new_record(db: dict, data: list, last_id: int) -> dict:
+def new_record_db(db: dict, data: list) -> dict:
     '''Запись в database новой записи
     :param db: database
     :param data: данные для записи
     :param last_id: последний ID
     :return: обновленная database
     '''
+    last_id = get_id() + 1
     header = header_csv_file()
     db[last_id] = {name: value for name, value in zip(header, data)}
+    put_id(str(last_id))
     return db
 
 
@@ -118,14 +105,32 @@ def delet_record(db: dict, last_id: str) -> dict:
     return db
 
 
-name = header_csv_file()
-catalog = read_file('catalog.csv', '#')
-database = dict()
-print(catalog)
-db = write_db_with_id(database, catalog)
-print(db)
-
-last_id = str(get_id_from_db(db))
-print(db[last_id])
-print(delet_record(db, last_id))
+# name = header_csv_file()
+# catalog = read_file('catalog.csv', '#')
+# database = dict()
+# print(catalog)
+# db = write_db_with_id(database, catalog)
 # print(db)
+#
+# last_id = str(get_id_from_db(db))
+# print(db[last_id])
+# print(delet_record(db, last_id))
+# # print(db)
+
+
+def export_db(name_file: str, db: dict):
+    with open(name_file, 'w', newline='') as file:
+        writer = csv.writer(file, delimiter='#')
+
+
+
+my_dict = {'1': {'lastname': 'a', 'firstname': 'b', 'group': 'c'},
+           '2': {'lastname': 'd', 'firstname': 'e', 'group': 'g'}}
+
+record = []
+for key, value in my_dict.items():
+    record.append(key)
+    for val in value.values():
+        record.append(val)
+
+print(record)
