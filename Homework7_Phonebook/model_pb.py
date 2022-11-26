@@ -4,6 +4,7 @@ import file_txt as filetxt
 import file_csv as filecsv
 
 
+
 def new_record(catalog: str, list_menu: list) -> str:
     """
     Запись нового пользователя в catalog

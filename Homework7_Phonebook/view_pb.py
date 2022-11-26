@@ -1,14 +1,22 @@
+from colorama import init
+from colorama import Fore, Style
+import tqdm
+
+init()
+
+
 def start_menu():
     """
     Меню выбора действий
     """
-    print('\n'
-          'Выберите пункт меню: \n'
-          "1 - новая запись;\n"
-          "2 - вывод всего справочника в терминал;\n"
-          "3 - импорт справочника;\n"
-          "4 - экспорт справочника; \n"
-          "0 - выход из программы")
+    print(Fore.BLUE + "\n"
+                      "Выберите пункт меню: \n"
+                      "1 - новая запись;\n"
+                      "2 - вывод всего справочника в терминал;\n"
+                      "3 - импорт справочника;\n"
+                      "4 - экспорт справочника; \n"
+                      "0 - выход из программы")
+    print(Style.RESET_ALL)
 
 
 def action_type(action: str):
@@ -17,11 +25,12 @@ def action_type(action: str):
     :param action: "экспорт"/"импорт"
     :return:
     """
-    print(f'\n'
-          f'Выберите формат  для {action} файла: \n'
-          "1 - txt;\n"
-          "2 - csv;\n"
-          "0 - возврат в меню")
+    print(Fore.GREEN + f'\n'
+                       f'Выберите формат  для {action} файла: \n'
+                       "1 - txt;\n"
+                       "2 - csv;\n"
+                       "0 - возврат в меню")
+    print(Style.RESET_ALL)
 
 
 def get_value() -> str:
@@ -66,7 +75,8 @@ def get_new_record(data: str) -> str:
 
 def print_all(catalog: str):
     print("Текущие данные из справочника: ")
-    print(catalog)
+    print(Fore.YELLOW + catalog)
+    print(Style.RESET_ALL)
 
 
 def name_file():
