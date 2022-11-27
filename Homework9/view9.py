@@ -4,7 +4,7 @@ def input_number(value: str) -> str:
 
 
 def output(result: list):
-    print(result[0], '/', result[1], end=' ')
+    print(result[0], '/', result[1])
 
 
 def print_result(operation: str):

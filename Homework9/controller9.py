@@ -12,3 +12,18 @@ def calculation():
         result = model.calculate(fraction1, fraction2, operation)
         view.print_result(operation)
         view.output(result)
+
+
+def bot_calculation(data: str):
+    if "+" in data:
+        operation = "+"
+        return model.bot_pars(operation, data)
+    elif "-" in data:
+        operation = "-"
+        return model.bot_pars(operation, data)
+    elif "*" in data:
+        operation = "*"
+        return model.bot_pars(operation, data)
+    elif "/" in data:
+        operation = "/"
+        return model.bot_pars(operation, data)

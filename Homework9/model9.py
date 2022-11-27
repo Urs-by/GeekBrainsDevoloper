@@ -7,6 +7,9 @@ def pars(data: str) -> list:
     return data_list
 
 
+# def pars_term(data:str):
+
+
 def nok(fraction1: list, fraction2: list) -> int:
     """
     Функция возвращает наименьшее общее кратное НОК
@@ -57,3 +60,20 @@ def calculate(fraction1: list, fraction2: list, operation: str) -> list:
     elif operation == '/':
         result = [fraction1[0] * fraction2[1], fraction1[1] * fraction2[0]]
         return cut(result)
+
+
+def bot_pars(operator, data: str) -> str:
+    """
+    Функция подсчета целого выражения из телеграмм бота
+    :param operator: оператор '+', '-', '/','*'
+    :param data: введенное выражение
+    :return: результат вычислений
+    """
+    new_data = data.split(operator)
+    fraction1 = pars(new_data[0])
+    fraction2 = pars(new_data[1])
+    result = cut(calculate(fraction1, fraction2, operator))
+    if result[1] == 1:
+        return result[0]
+    else:
+        return str(result[0]) + '/' + str(result[1])
